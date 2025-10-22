@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
-# QuizYourFaith – one-line updater
-# Run:  bash update.sh   (inside project root)
-echo "⬇️  Pulling latest commit..."
+#!/bin/bash
+# Pull the latest changes from GitHub
 git pull origin main
-echo "🔧 Setting permissions..."
+
+# Set correct permissions
 chmod -R 755 storage
 chmod -R 755 public/assets
-echo "✅ Up-to-date!"
