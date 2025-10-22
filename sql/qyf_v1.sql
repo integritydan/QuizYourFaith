@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS qyf_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE qyf_db;
+CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(100),email VARCHAR(255) UNIQUE,password VARCHAR(255),avatar VARCHAR(255),bio TEXT,google_id VARCHAR(50) UNIQUE,role ENUM('user','admin') DEFAULT 'user',banned_at DATETIME NULL,created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE categories (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(100),slug VARCHAR(100) UNIQUE,description TEXT,icon VARCHAR(50));
+CREATE TABLE quizzes (id INT AUTO_INCREMENT PRIMARY KEY,category_id INT,title VARCHAR(255),description TEXT,difficulty ENUM('easy','medium','hard'),duration SMALLINT,badge_id INT NULL,FOREIGN KEY (category_id) REFERENCES categories(id));
+CREATE TABLE questions (id INT AUTO_INCREMENT PRIMARY KEY,quiz_id INT,question TEXT,option_a VARCHAR(255),option_b VARCHAR(255),option_c VARCHAR(255),option_d VARCHAR(255),correct ENUM('a','b','c','d'),explanation TEXT,FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE);
+CREATE TABLE answers (id BIGINT AUTO_INCREMENT PRIMARY KEY,user_id INT,quiz_id INT,question_id INT,chosen ENUM('a','b','c','d'),is_correct BOOLEAN,answered_at DATETIME DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,INDEX idx_user_quiz (user_id, quiz_id));
+CREATE TABLE leaderboard (user_id INT PRIMARY KEY,total_score INT DEFAULT 0,quizzes_taken INT DEFAULT 0,accuracy DECIMAL(5,2),streak SMALLINT DEFAULT 0,last_quiz_at DATETIME,rank INT,FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);
+CREATE TABLE achievements (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(100),description TEXT,badge_icon VARCHAR(255),metric ENUM('quizzes','accuracy','streak','donation'),threshold INT);
+CREATE TABLE user_achievements (user_id INT,achievement_id INT,earned_at DATETIME DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (user_id, achievement_id));
+CREATE TABLE donations (id BIGINT AUTO_INCREMENT PRIMARY KEY,user_id INT,gateway ENUM('paystack','paypal','flutterwave'),amount DECIMAL(10,2),currency CHAR(3),status ENUM('pending','success','failed'),reference VARCHAR(100) UNIQUE,paid_at DATETIME NULL,created_at DATETIME DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (user_id) REFERENCES users(id));
+CREATE TABLE settings (`key` VARCHAR(100) PRIMARY KEY,`value` TEXT);
+CREATE TABLE logs (id BIGINT AUTO_INCREMENT PRIMARY KEY,user_id INT NULL,action VARCHAR(100),metadata JSON,ip VARCHAR(45),created_at DATETIME DEFAULT CURRENT_TIMESTAMP);
+INSERT INTO categories (name,slug,description) VALUES ('General Bible','general','Mixed-book general knowledge'),('Life of Jesus','jesus','Gospels & events'),('Old Testament','ot','Torah, History, Prophets');
+INSERT INTO quizzes (category_id,title,description,difficulty,duration) VALUES (1,'10-Question Starter','Quick mixed Bible trivia','easy',300);
+INSERT INTO questions (quiz_id,question,option_a,option_b,option_c,option_d,correct,explanation) VALUES (1,'Who built the Ark?','Moses','Noah','David','Paul','b','Genesis 6–9'),(1,'How many disciples did Jesus choose?','10','11','12','13','c','Matthew 10:2-4');
+INSERT INTO achievements (name,description,badge_icon,metric,threshold) VALUES ('First Quiz','Completed your first quiz','bronze.png','quizzes',1),('Perfect Score','100 % accuracy in a quiz','gold.png','accuracy',100);
+INSERT INTO settings (`key`,`value`) VALUES ('site_title','QuizYourFaith'),('logo','/assets/img/logo.png');
