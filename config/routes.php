@@ -12,5 +12,7 @@ $map=[
     '#^admin/quizzes$#' => 'AdminController@quizzes',
     '#^donate$#' => 'DonateController@handle',
 ];
-foreach($map as $re=>$act){if(preg_match($re,$uri,$m)){list($c,$f)=explode('@',$act);$c="App\\Controllers\\$c";(new $c)->$f(...array_slice($m,1));exit;}}
+foreach($map as $re=>$act){
+    if(preg_match($re,$uri,$m)){list($c,$f)=explode('@',$act);$c="App\\Controllers\\$c";(new $c)->$f(...array_slice($m,1));exit;}
+}
 http_response_code(404);echo "Page not found";
