@@ -8,3 +8,7 @@ $router->get('/account',        [\App\Controllers\AccountController::class,'inde
 $router->get('/account/settings',[\App\Controllers\AccountController::class,'settings']);
 $router->get('/account/profile', [\App\Controllers\AccountController::class,'profile']);
 $router->get('/account/donations',[\App\Controllers\AccountController::class,'donations']);
+$router->group('/admin',function($r){
+    $r->get('/harden',[\App\Controllers\Admin\HardenController::class,'index']);
+    $r->post('/harden/run',[\App\Controllers\Admin\HardenController::class,'run']);
+});
