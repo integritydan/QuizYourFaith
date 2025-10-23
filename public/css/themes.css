@@ -1,2 +1,12 @@
 [data-bs-theme="light"] .bg-dark{background:var(--royal)!important;}
 [data-bs-theme="light"] .navbar-dark .navbar-brand{color:#fff;}
+/* ---- light-mode category fix ---- */
+[data-bs-theme="light"] .btn-outline-light{
+  color:#fff!important;
+  border-color:var(--royal)!important;
+  background:var(--royal)!important;
+}
+[data-bs-theme="light"] .btn-outline-light:hover{
+  background:#002a8c!important;
+  border-color:#002a8c!important;
+}
