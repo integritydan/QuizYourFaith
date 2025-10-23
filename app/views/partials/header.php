@@ -21,7 +21,7 @@
   <a class="navbar-brand fw-bold" href="/">QuizYourFaith</a>
   <div class="ms-auto d-flex align-items-center gap-3">
     <button id="themeToggle" class="btn btn-sm btn-outline-light">🌓</button>
-    <span class="badge bg-primary"><?=$user['name']??'Guest'?></span>
+    <a href="/account" class="badge bg-primary text-decoration-none"><?=$user["name"]??"Guest"?></a>
     <span class="badge bg-light text-dark"><?=$user['points']??0?> pts</span>
   </div>
 </nav>
