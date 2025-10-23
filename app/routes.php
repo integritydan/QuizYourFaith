@@ -12,3 +12,7 @@ $router->group('/admin',function($r){
     $r->get('/harden',[\App\Controllers\Admin\HardenController::class,'index']);
     $r->post('/harden/run',[\App\Controllers\Admin\HardenController::class,'run']);
 });
+$router->group('/admin',function($r){
+    $r->get('/payment-keys',[\App\Controllers\Admin\PaymentKeyController::class,'index']);
+    $r->post('/payment-keys/save',[\App\Controllers\Admin\PaymentKeyController::class,'save']);
+});
