@@ -1,15 +1,25 @@
 <?php include __DIR__.'/partials/header.php'; ?>
 <div class="container py-4">
-  <div class="row g-3">
-    <div class="col-6"><div class="card p-3 text-center"><div class="points">456</div><small>Total Points</small></div></div>
-    <div class="col-6"><div class="card p-3 text-center"><div class="points">38</div><small>Quizzes Played</small></div></div>
+  <!-- top stats row -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3"><div class="card-dash p-3 text-center"><div class="icon-bible">📖</div><div class="h5 mt-2">845</div><small>Total Points</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card-dash p-3 text-center"><div class="icon-bible">⚡</div><div class="h5 mt-2">32</div><small>Quizzes Played</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card-dash p-3 text-center"><div class="icon-bible">🔥</div><div class="h5 mt-2">7</div><small>Day Streak</small></div></div>
+    <div class="col-6 col-lg-3"><div class="card-dash p-3 text-center"><div class="icon-bible">🏆</div><div class="h5 mt-2">#41</div><small>Global Rank</small></div></div>
   </div>
-  <h5 class="mt-4 mb-3">Quick Play</h5>
-  <a href="/quiz/play" class="btn btn-primary w-100 py-3 mb-3">▶ Start Daily Challenge</a>
-  <h5 class="mt-3 mb-3">Categories</h5>
+
+  <!-- multi-player CTA -->
+  <div class="card-dash p-4 text-center mb-4">
+    <h5>Multi-Player Arena</h5>
+    <p class="mb-3">Challenge a friend in real-time Bible trivia!</p>
+    <a href="/multiplayer" class="btn btn-royal w-100 py-2">⚔️ Challenge a Friend</a>
+  </div>
+
+  <!-- categories -->
+  <h5 class="mb-3">Quick Categories</h5>
   <div class="row g-2">
-    <?php foreach(['Old Testament','New Testament','Miracles','Characters'] as $c): ?>
-      <div class="col-6"><a class="btn btn-outline-light w-100"><?=$c?></a></div>
+    <?php foreach(['Old Testament','New Testament','Miracles','Characters','Parables','Prophets'] as $c): ?>
+      <div class="col-6 col-lg-4"><a class="btn btn-outline-light w-100 mb-2"><?=$c?></a></div>
     <?php endforeach; ?>
   </div>
 </div>
