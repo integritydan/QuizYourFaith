@@ -3,3 +3,8 @@ $router->group('/admin',function($r){
     $r->get('/update',[\App\Controllers\Admin\UpdateController::class,'index']);
     $r->post('/update/upload',[\App\Controllers\Admin\UpdateController::class,'upload']);
 });
+# ---- user account hub ----
+$router->get('/account',        [\App\Controllers\AccountController::class,'index']);
+$router->get('/account/settings',[\App\Controllers\AccountController::class,'settings']);
+$router->get('/account/profile', [\App\Controllers\AccountController::class,'profile']);
+$router->get('/account/donations',[\App\Controllers\AccountController::class,'donations']);
