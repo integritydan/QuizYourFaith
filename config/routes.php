@@ -1,5 +1,12 @@
 <?php
 $uri=parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+
+// Allow access to activation page without checking activation status
+if ($uri === '/activate.php' || $uri === '/activate') {
+    require BASE_PATH . '/activate.php';
+    exit;
+}
+
 $map=[
     '#^/$#' => 'HomeController@index',
     '#^login$#' => 'AuthController@login',
