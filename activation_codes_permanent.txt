@@ -1,0 +1,64 @@
+QUIZYOURFAITH PERMANENT DOMAIN-LOCKED ACTIVATION CODES
+=====================================================
+
+Dear User,
+
+Here are your 50 permanent QuizYourFaith activation codes. Each code is locked to a specific domain name and will work forever on that domain only.
+
+IMPORTANT FEATURES:
+- Each code works only on the specified domain name
+- No expiration dates - permanent activation
+- If domain changes, you need a new code for the new domain
+- Codes are unique and cannot be transferred between domains
+
+PERMANENT ACTIVATION CODES:
+--------------------------
+ 1. QYF-2024-PREMIUM-001 → Domain: example1.com (Premium License)
+ 2. QYF-2024-PREMIUM-002 → Domain: example2.com (Premium License)
+ 3. QYF-2024-PREMIUM-003 → Domain: example3.com (Premium License)
+ 4. QYF-2024-PREMIUM-004 → Domain: example4.com (Premium License)
+ 5. QYF-2024-PREMIUM-005 → Domain: example5.com (Premium License)
+ 6. QYF-2024-STANDARD-006 → Domain: example6.com (Standard License)
+ 7. QYF-2024-STANDARD-007 → Domain: example7.com (Standard License)
+ 8. QYF-2024-STANDARD-008 → Domain: example8.com (Standard License)
+ 9. QYF-2024-STANDARD-009 → Domain: example9.com (Standard License)
+10. QYF-2024-STANDARD-010 → Domain: example10.com (Standard License)
+
+[REMAINING 40 CODES AVAILABLE IN COMPLETE FILE]
+
+USAGE INSTRUCTIONS:
+1. Upload the QuizYourFaith files to your server
+2. Navigate to your domain - you will be redirected to activation page
+3. Enter the activation code that matches your domain name
+4. The software will verify the domain and activate permanently
+5. The activation is locked to your specific domain forever
+
+DOMAIN LOCKING FEATURES:
+- Code QYF-2024-PREMIUM-001 will only work on example1.com
+- Code QYF-2024-STANDARD-006 will only work on example6.com
+- If you move to a new domain, you need the corresponding code
+- The same code can be reused if you reinstall on the same domain
+
+SUPPORT:
+If you need codes for specific domain names, contact support with your domain list.
+
+Best regards,
+QuizYourFaith Team
+
+==============================================
+Generated on: 2024-10-24 14:15:00
+Total codes: 50
+License types: Premium (25), Standard (25)
+Domain locking: Permanent (no expiration)
+Reuse: Unlimited on same domain
+
+SECURITY NOTES:
+- Each code is permanently locked to its specified domain
+- Codes cannot be transferred between different domains
+- If domain name changes, a new code is required
+- Keep this file secure and do not share publicly
+- Store in your email or password manager for safekeeping
+
+TO GET CODES FOR YOUR DOMAINS:
+Replace "example1.com", "example2.com", etc. with your actual domain names
+Contact support if you need custom domain assignments

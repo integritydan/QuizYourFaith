@@ -7,9 +7,17 @@
 class ActivationSystem {
     private static $activationFile = BASE_PATH . '/storage/.activated';
     private static $activationCodes = [
-        // You can add multiple valid activation codes here
-        'QYF-2024-PREMIUM-001' => ['expires' => '2025-12-31', 'type' => 'premium'],
-        'QYF-2024-STANDARD-002' => ['expires' => '2025-06-30', 'type' => 'standard'],
+        // Domain-locked activation codes - no expiration, locked to domain
+        'QYF-2024-PREMIUM-001' => ['domain' => 'example1.com', 'type' => 'premium'],
+        'QYF-2024-PREMIUM-002' => ['domain' => 'example2.com', 'type' => 'premium'],
+        'QYF-2024-PREMIUM-003' => ['domain' => 'example3.com', 'type' => 'premium'],
+        'QYF-2024-PREMIUM-004' => ['domain' => 'example4.com', 'type' => 'premium'],
+        'QYF-2024-PREMIUM-005' => ['domain' => 'example5.com', 'type' => 'premium'],
+        'QYF-2024-STANDARD-006' => ['domain' => 'example6.com', 'type' => 'standard'],
+        'QYF-2024-STANDARD-007' => ['domain' => 'example7.com', 'type' => 'standard'],
+        'QYF-2024-STANDARD-008' => ['domain' => 'example8.com', 'type' => 'standard'],
+        'QYF-2024-STANDARD-009' => ['domain' => 'example9.com', 'type' => 'standard'],
+        'QYF-2024-STANDARD-010' => ['domain' => 'example10.com', 'type' => 'standard'],
     ];
     
     /**
@@ -25,7 +33,18 @@ class ActivationSystem {
             return false;
         }
         
-        // Check if activation has expired
+        // Check domain lock (permanent activation for specific domain)
+        if (isset($activationData['domain'])) {
+            $currentDomain = $_SERVER['HTTP_HOST'] ?? 'localhost';
+            if ($currentDomain !== $activationData['domain']) {
+                // Domain mismatch - activation is invalid for this domain
+                return false;
+            }
+            // Domain matches - activation is valid (no expiration for domain-locked codes)
+            return true;
+        }
+        
+        // Check if activation has expired (for legacy codes with expiration)
         if (isset($activationData['expires']) && strtotime($activationData['expires']) < time()) {
             self::deactivate();
             return false;
@@ -44,19 +63,32 @@ class ActivationSystem {
         
         $codeData = self::$activationCodes[$code];
         
-        // Check if code has expired
-        if (strtotime($codeData['expires']) < time()) {
-            return ['success' => false, 'message' => 'Activation code has expired'];
+        // Check if code is domain-locked (no expiration, locked to specific domain)
+        if (isset($codeData['domain'])) {
+            $currentDomain = $_SERVER['HTTP_HOST'] ?? 'localhost';
+            if ($currentDomain !== $codeData['domain']) {
+                return ['success' => false, 'message' => 'This activation code is locked to domain: ' . $codeData['domain']];
+            }
+            // Domain matches, proceed with activation (no expiration check)
+        } elseif (isset($codeData['expires'])) {
+            // Legacy expiration-based codes (if any)
+            if (strtotime($codeData['expires']) < time()) {
+                return ['success' => false, 'message' => 'Activation code has expired'];
+            }
         }
         
         // Create activation file
         $activationData = [
             'code' => $code,
             'activated_at' => date('Y-m-d H:i:s'),
-            'expires' => $codeData['expires'],
             'type' => $codeData['type'],
             'domain' => $_SERVER['HTTP_HOST'] ?? 'localhost'
         ];
+        
+        // Only add expires if it exists (for legacy codes)
+        if (isset($codeData['expires'])) {
+            $activationData['expires'] = $codeData['expires'];
+        }
         
         // Ensure storage directory exists
         $storageDir = dirname(self::$activationFile);
