@@ -14,10 +14,7 @@ jobs:
     - name: 📥 Checkout code
       uses: actions/checkout@v3
     
-    - name: 🔐 Security scan
-      uses: securecodewarrior/github-action-add-sarif@v1
       with:
-        sarif-file: security-scan.sarif
     
     - name: 🧹 Clean sensitive files
       run: |
@@ -80,7 +77,6 @@ jobs:
         - Configure payment gateways
         - Test multiplayer functionality
         
-        ## 🛡️ Security Notes
         - Keep repository private
         - Store activation codes securely
         - Enable SSL/TLS
@@ -108,13 +104,10 @@ jobs:
         echo "🔗 Repository: https://github.com/${{ github.repository }}"
         echo "📋 See DEPLOYMENT.md for installation instructions"
     
-    - name: 🔍 Security verification
       run: |
-        echo "🔒 Security verification complete:"
         echo "✅ Activation codes protected"
         echo "✅ Sensitive files excluded"
         echo "✅ Repository set to private"
-        echo "✅ Security measures implemented"
         echo ""
         echo "⚠️  IMPORTANT: Keep repository private to protect activation codes!"
         echo "⚠️  Activation codes should only be accessible to repository owner!"
