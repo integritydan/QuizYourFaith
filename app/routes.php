@@ -16,3 +16,22 @@ $router->group('/admin',function($r){
     $r->get('/payment-keys',[\App\Controllers\Admin\PaymentKeyController::class,'index']);
     $r->post('/payment-keys/save',[\App\Controllers\Admin\PaymentKeyController::class,'save']);
 });
+
+// Video management routes
+$router->group('/admin',function($r){
+    $r->get('/videos',[\App\Controllers\Admin\VideoController::class,'index']);
+    $r->get('/videos/create',[\App\Controllers\Admin\VideoController::class,'create']);
+    $r->post('/videos/store',[\App\Controllers\Admin\VideoController::class,'store']);
+    $r->get('/videos/edit/{id}',[\App\Controllers\Admin\VideoController::class,'edit']);
+    $r->post('/videos/update/{id}',[\App\Controllers\Admin\VideoController::class,'update']);
+    $r->post('/videos/delete/{id}',[\App\Controllers\Admin\VideoController::class,'delete']);
+    $r->post('/videos/toggle-status/{id}',[\App\Controllers\Admin\VideoController::class,'toggleStatus']);
+    $r->get('/videos/categories',[\App\Controllers\Admin\VideoController::class,'categories']);
+    $r->post('/videos/categories/store',[\App\Controllers\Admin\VideoController::class,'storeCategory']);
+});
+
+// Frontend video routes
+$router->get('/videos',[\App\Controllers\VideoController::class,'slider']);
+$router->get('/videos/watch/{id}',[\App\Controllers\VideoController::class,'watch']);
+$router->post('/videos/react',[\App\Controllers\VideoController::class,'apiReact']);
+$router->post('/videos/remove-reaction',[\App\Controllers\VideoController::class,'apiRemoveReaction']);

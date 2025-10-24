@@ -19,10 +19,29 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
   <a class="navbar-brand fw-bold" href="/">QuizYourFaith</a>
-  <div class="ms-auto d-flex align-items-center gap-3">
-    <button id="themeToggle" class="btn btn-sm btn-outline-light">🌓</button>
-    <a href="/account" class="badge bg-primary text-decoration-none"><?=$user["name"]??"Guest"?></a>
-    <span class="badge bg-light text-dark"><?=$user['points']??0?> pts</span>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/videos">📺 Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/quiz">Quizzes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/multiplayer">Multiplayer</a>
+      </li>
+    </ul>
+    <div class="d-flex align-items-center gap-3">
+      <button id="themeToggle" class="btn btn-sm btn-outline-light">🌓</button>
+      <a href="/account" class="badge bg-primary text-decoration-none"><?=$user["name"]??"Guest"?></a>
+      <span class="badge bg-light text-dark"><?=$user['points']??0?> pts</span>
+    </div>
   </div>
 </nav>
 <script src="/js/theme.js"></script>
