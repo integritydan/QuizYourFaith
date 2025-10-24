@@ -12,7 +12,7 @@ The GitHub push failure due to missing `workflow` scope in your Personal Access 
 ### 1. **Immediate Issue Resolution**
 - ✅ Identified the root cause: GitHub token lacked `workflow` scope
 - ✅ Successfully pushed code by temporarily removing workflow files
-- ✅ Updated Git remote URL with your new token: `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`
+- ✅ Updated Git remote URL with your new token
 
 ### 2. **Complete Workflow Restoration**
 - ✅ Restored full deployment workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))
@@ -31,8 +31,8 @@ The GitHub push failure due to missing `workflow` scope in your Personal Access 
 ```bash
 # Your Git remote is now properly configured
 git remote -v
-# Output: origin https://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@github.com/integritydan/QuizYourFaith.git (fetch)
-# Output: origin https://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@github.com/integritydan/QuizYourFaith.git (push)
+# Output: origin https://[YOUR_TOKEN]@github.com/integritydan/QuizYourFaith.git (fetch)
+# Output: origin https://[YOUR_TOKEN]@github.com/integritydan/QuizYourFaith.git (push)
 ```
 
 ### GitHub Actions Workflows
