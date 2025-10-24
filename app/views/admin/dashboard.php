@@ -13,6 +13,16 @@
     <div class="col-md-6 col-lg-4">
       <div class="card h-100">
         <div class="card-body text-center">
+          <i class="fas fa-book-open fa-2x text-purple mb-3"></i>
+            <h6>Bible Quiz System</h6>
+            <p class="small text-muted">Manage Bible book quizzes and questions</p>
+            <a href="/admin/bible-quiz" class="btn btn-purple btn-sm">Manage Quizzes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body text-center">
           <i class="fas fa-toggle-on fa-2x text-warning mb-3"></i>
           <h6>Feature Management</h6>
           <p class="small text-muted">Enable/disable platform features</p>

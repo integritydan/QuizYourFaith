@@ -34,7 +34,9 @@
       <?php endif; ?>
       <?php if (\App\Models\Feature::isEnabled('quiz_system')): ?>
       <li class="nav-item">
-        <a class="nav-link" href="/quiz">Quizzes</a>
+        <a class="nav-link" href="/bible-quiz">
+            <i class="fas fa-book-open"></i> Bible Quiz
+        </a>
       </li>
       <?php endif; ?>
       <?php if (\App\Models\Feature::isEnabled('multiplayer')): ?>
