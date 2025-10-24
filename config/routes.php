@@ -6,6 +6,7 @@ $map=[
     '#^register$#' => 'AuthController@register',
     '#^logout$#' => 'AuthController@logout',
     '#^dashboard$#' => 'UserController@dashboard',
+    '#^quizzes$#' => 'QuizController@index',
     '#^quiz/(\d+)$#' => 'QuizController@play',
     '#^result/(\d+)$#' => 'QuizController@result',
     '#^admin$#' => 'AdminController@dashboard',
