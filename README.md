@@ -1,5 +1,7 @@
 # 🎯 QuizYourFaith - Multiplayer Bible Quiz Platform
 
+**Developer: Daniel Onnoriode**
+
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/integritydan/QuizYourFaith)
 [![PHP Version](https://img.shields.io/badge/php-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -46,7 +48,7 @@ QuizYourFaith is a comprehensive multiplayer Bible quiz platform featuring real-
 - **CSRF Protection**: Form security measures
 - **Chat Moderation**: Content filtering and admin controls
 
-## 🚀 Quick Start
+## 🚀 Shared Server Installation Guide
 
 ### Prerequisites
 - PHP 7.4+ with extensions: `pdo_mysql`, `openssl`, `curl`, `json`, `mbstring`
@@ -54,85 +56,146 @@ QuizYourFaith is a comprehensive multiplayer Bible quiz platform featuring real-
 - Node.js 14+ (for WebSocket server)
 - SSL Certificate (recommended for production)
 
-### Installation
+### Step 1: Upload Files to Shared Server
+1. **Download from GitHub**: https://github.com/integritydan/QuizYourFaith
+2. **Upload via FTP/cPanel**: Extract and upload all files to your web directory
+3. **Set Permissions**:
+   ```bash
+   chmod 755 -R app/ storage/ websocket/
+   chmod 644 app/config/*.php
+   ```
 
-1. **Clone the repository**
+### Step 2: Database Setup
+1. **Create Database** in your hosting control panel:
+   ```sql
+   CREATE DATABASE qyf_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
+
+2. **Run SQL Schemas** via phpMyAdmin or command line:
+   ```bash
+   mysql -u your_user -p your_database < sql/qyf_v1.sql
+   mysql -u your_user -p your_database < sql/multiplayer_schema.sql
+   mysql -u your_user -p your_database < sql/settings_schema.sql
+   mysql -u your_user -p your_database < sql/update_system_schema.sql
+   ```
+
+### Step 3: Environment Configuration
+1. **Create `.env` file** in the root directory:
+   ```env
+   # Database
+   DB_HOST=localhost
+   DB_NAME=your_database_name
+   DB_USER=your_database_user
+   DB_PASS=your_database_password
+   
+   # Security
+   JWT_SECRET=your-secret-key-min-32-chars-here
+   SETTINGS_ENCRYPTION_KEY=your-encryption-key-32-chars-here
+   
+   # WebSocket
+   WS_PORT=3001
+   FRONTEND_URL=https://yourdomain.com
+   ```
+
+2. **Secure the `.env` file**:
+   ```bash
+   chmod 600 .env
+   ```
+
+### Step 4: Web Server Configuration
+1. **Point domain** to the `public/` directory
+2. **Configure SSL certificate** for HTTPS
+3. **Set up WebSocket proxy** (if needed):
+
+For Apache (.htaccess in public/):
+```apache
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+```
+
+For Nginx:
+```nginx
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+```
+
+### Step 5: Run Installation Wizard
+1. **Access installer**: `https://yourdomain.com/install`
+2. **Follow 3-step process**:
+   - System requirements check
+   - Database connection setup
+   - Admin account creation
+
+### Step 6: Post-Installation Setup
+1. **Access admin panel**: `https://yourdomain.com/admin`
+2. **Upload activation codes** through secure admin interface
+3. **Configure payment gateways** in settings
+4. **Set up email providers** for notifications
+5. **Test multiplayer functionality**
+
+## 🔧 Webuzo Server Specific Instructions
+
+### For Webuzo Control Panel:
+1. **Create Application** in Webuzo App Manager
+2. **Upload ZIP file** through file manager
+3. **Create MySQL Database** in Database section
+4. **Run installer** via web interface
+5. **Configure cron jobs** for automated tasks:
+   ```bash
+   # Add to cron jobs in Webuzo
+   */5 * * * * php /path/to/cron/leaderboard.php
+   ```
+
+## 🛡️ Security Configuration for Shared Hosting
+
+### File Permissions (Critical)
 ```bash
-git clone https://github.com/integritydan/QuizYourFaith.git
-cd QuizYourFaith
+# Directories
+find . -type d -exec chmod 755 {} \;
+
+# PHP files
+find . -name "*.php" -exec chmod 644 {} \;
+
+# Writable directories
+chmod 777 storage/logs/
+chmod 777 storage/cache/
 ```
 
-2. **Install dependencies**
-```bash
-# PHP dependencies
-composer install
+### .htaccess Security Rules
+Create `.htaccess` in root directory:
+```apache
+# Deny access to sensitive files
+<FilesMatch "\.(env|json|lock|md)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
 
-# WebSocket server dependencies
-cd websocket && npm install && cd ..
+# Protect sensitive directories
+RedirectMatch 404 /\.git
+RedirectMatch 404 /config/
+RedirectMatch 404 /storage/
 ```
 
-3. **Database setup**
-```bash
-# Create database
-mysql -u root -p -e "CREATE DATABASE qyf_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+## 📋 Activation Code Management
 
-# Run all schemas
-mysql -u root -p qyf_db < sql/qyf_v1.sql
-mysql -u root -p qyf_db < sql/multiplayer_schema.sql
-mysql -u root -p qyf_db < sql/settings_schema.sql
-mysql -u root -p qyf_db < sql/update_system_schema.sql
-```
+### For Shared Server:
+1. **Access admin panel** at `/admin/activation`
+2. **Upload codes** through secure interface
+3. **Codes are stored encrypted** in database
+4. **Never store activation files** in web-accessible directories
 
-4. **Environment configuration**
-```bash
-# Copy and configure environment file
-cp .env.example .env
-# Edit .env with your configuration
-```
-
-5. **File permissions**
-```bash
-chmod 755 -R app/ storage/ websocket/
-chmod 644 app/config/*.php
-```
-
-6. **Start services**
-```bash
-# Start WebSocket server
-cd websocket && npm start
-
-# Configure web server to point to public/ directory
-```
-
-## 📋 Configuration Guide
-
-### Environment Variables
-Create a `.env` file with:
-```env
-# Database
-DB_HOST=localhost
-DB_NAME=qyf_db
-DB_USER=your_user
-DB_PASS=your_password
-
-# Security
-JWT_SECRET=your-secret-key-min-32-chars
-SETTINGS_ENCRYPTION_KEY=your-encryption-key-32-chars
-
-# WebSocket
-WS_PORT=3001
-FRONTEND_URL=https://yourdomain.com
-```
-
-### Super Admin Setup
-1. Access `/admin/update` after installation
-2. Upload your update package (ZIP file)
-3. System automatically preserves all user data
-4. Configure settings through admin dashboard
+### Security Notes:
+- Keep activation codes private and secure
+- Regular rotation recommended
+- Monitor usage through admin dashboard
+- Backup codes regularly
 
 ## 🔧 System Update Process
 
-### Automatic Updates
+### Automatic Updates (Recommended)
 1. Navigate to **System Update** in Super Admin panel
 2. Upload new version ZIP file
 3. System automatically:
@@ -142,103 +205,43 @@ FRONTEND_URL=https://yourdomain.com
    - Runs any necessary migrations
    - Clears caches and optimizes
 
-### Manual Update (if needed)
+### Manual Backup (Before Updates)
 ```bash
-# Backup current system
-php admin/backup/create.php
-
-# Upload new files
-# Run migrations
-php admin/migrate/run.php
-
-# Clear caches
-php admin/cache/clear.php
+# Create backup via admin panel
+# Or use: php admin/backup/create.php
 ```
 
-## 🛡️ Security Best Practices
+## 📞 Support & Troubleshooting
 
-### Activation Codes Protection
-- **Private Repository**: Keep activation codes in private repository
-- **Environment Variables**: Store sensitive keys in `.env` (not in code)
-- **Access Control**: Only repository owner can view activation files
-- **Regular Rotation**: Update activation codes periodically
+### Common Issues:
+1. **Database Connection Errors**:
+   - Verify credentials in `.env` file
+   - Check database exists and is accessible
+   - Ensure proper user permissions
 
-### Recommended GitHub Settings
-1. **Make repository private** if containing activation codes
-2. **Enable GitHub Security Features**:
-   - Dependabot alerts
-   - Code scanning
-   - Secret scanning
-3. **Branch Protection**: Require reviews for main branch
-4. **Access Management**: Limit collaborator access
+2. **WebSocket Connection Issues**:
+   - Check if port 3001 is available
+   - Verify WebSocket server is running
+   - Check firewall settings
 
-## 📊 Monitoring & Maintenance
+3. **Permission Errors**:
+   - Ensure proper file permissions (755 for dirs, 644 for files)
+   - Check .htaccess configuration
+   - Verify PHP version compatibility
 
-### System Health
-- Monitor WebSocket connections
-- Track database performance
-- Review error logs regularly
-- Check backup integrity
-
-### Chat Management
-- Messages automatically cleared on user logout
-- Admin moderation tools available
-- Rate limiting prevents spam
-- Profanity filtering enabled
-
-### Update Safety
-- Automatic backups before updates
-- Rollback capability if update fails
-- User data and progress preserved
-- Zero-downtime updates possible
-
-## 🎯 Multiplayer Features
-
-### Real-time Gaming
-- WebSocket-powered instant communication
-- Live score updates
-- Real-time chat with moderation
-- Tournament brackets and scheduling
-
-### Social Features
-- Friend system with invitations
-- Private match creation
-- Team-based competitions
-- Achievement and badge system
-
-### Monetization
-- Tournament entry fees
-- Donation system
-- Premium features (future)
-- Advertisement integration ready
-
-## 📞 Support & Documentation
-
-### Getting Help
-- Check [COMPLETE_SETUP_GUIDE.md](COMPLETE_SETUP_GUIDE.md) for detailed setup
-- Review application logs in `storage/logs/`
-- Check WebSocket server console output
-- Enable debug mode for troubleshooting
-
-### Contributing
-1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Create Pull Request
-
-### License
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- **Live Demo**: [Your Demo URL]
-- **Documentation**: [Wiki/Documentation URL]
-- **Issue Tracker**: [GitHub Issues]
-- **Security Policy**: [SECURITY.md]
+### Getting Help:
+- Check application logs in `storage/logs/`
+- Enable debug mode temporarily for troubleshooting
+- Review WebSocket server console output
+- Contact your hosting provider for server-specific issues
 
 ---
 
-**⭐ Star this repository if you find it helpful!**
+## 🎉 Ready for Production!
 
-**💡 For support or questions, please open an issue on GitHub.**
+**Your QuizYourFaith platform is fully configured and secured for shared server installation!**
+
+**Developer: Daniel Onnoriode**  
+**Status: ✅ READY FOR SHARED SERVER DEPLOYMENT** 🚀
+
+Follow the steps above to install on your shared hosting or Webuzo server. The platform includes enterprise-grade security and is optimized for shared hosting environments.
