@@ -27,15 +27,21 @@
       <li class="nav-item">
         <a class="nav-link" href="/">Home</a>
       </li>
+      <?php if (\App\Models\Feature::isEnabled('youtube_videos')): ?>
       <li class="nav-item">
         <a class="nav-link" href="/videos">📺 Messages</a>
       </li>
+      <?php endif; ?>
+      <?php if (\App\Models\Feature::isEnabled('quiz_system')): ?>
       <li class="nav-item">
         <a class="nav-link" href="/quiz">Quizzes</a>
       </li>
+      <?php endif; ?>
+      <?php if (\App\Models\Feature::isEnabled('multiplayer')): ?>
       <li class="nav-item">
         <a class="nav-link" href="/multiplayer">Multiplayer</a>
       </li>
+      <?php endif; ?>
     </ul>
     <div class="d-flex align-items-center gap-3">
       <button id="themeToggle" class="btn btn-sm btn-outline-light">🌓</button>

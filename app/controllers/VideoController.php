@@ -5,6 +5,13 @@ use App\Models\Video;
 class VideoController {
     
     function slider() {
+        // Check if video feature is enabled
+        if (!\App\Models\Feature::isEnabled('youtube_videos')) {
+            $_SESSION['error'] = 'Video messages are currently disabled';
+            redirect('/');
+            return;
+        }
+        
         $videos = Video::getActiveVideos(10); // Get up to 10 active videos
         $categories = Video::getCategories();
         
@@ -15,6 +22,13 @@ class VideoController {
     }
     
     function watch($id) {
+        // Check if video feature is enabled
+        if (!\App\Models\Feature::isEnabled('youtube_videos')) {
+            $_SESSION['error'] = 'Video messages are currently disabled';
+            redirect('/');
+            return;
+        }
+        
         $video = Video::find($id);
         
         if (!$video || !$video->is_active) {
@@ -49,6 +63,12 @@ class VideoController {
     
     function apiReact() {
         header('Content-Type: application/json');
+        
+        // Check if video reactions are enabled
+        if (!\App\Models\Feature::isEnabled('video_reactions')) {
+            echo json_encode(['success' => false, 'message' => 'Video reactions are currently disabled']);
+            return;
+        }
         
         if (!isset($_SESSION['user_id'])) {
             echo json_encode(['success' => false, 'message' => 'Please login to react']);

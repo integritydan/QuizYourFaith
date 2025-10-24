@@ -1,6 +1,7 @@
 <?php include __DIR__.'/partials/header.php'; ?>
 <div class="container py-4">
   <!-- Video Messages Slider -->
+  <?php if (\App\Models\Feature::isEnabled('youtube_videos')): ?>
   <div class="mb-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>📺 Life-Changing Bible Messages</h5>
@@ -70,7 +71,8 @@
             <span class="visually-hidden">Next</span>
         </button>
         <?php endif; ?>
-    </div>
+      </div>
+      <?php endif; ?>
     <?php else: ?>
     <div class="text-center py-4 bg-light rounded">
         <i class="fas fa-video fa-2x text-muted mb-2"></i>

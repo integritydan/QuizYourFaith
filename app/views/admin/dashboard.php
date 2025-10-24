@@ -13,6 +13,16 @@
     <div class="col-md-6 col-lg-4">
       <div class="card h-100">
         <div class="card-body text-center">
+          <i class="fas fa-toggle-on fa-2x text-warning mb-3"></i>
+          <h6>Feature Management</h6>
+          <p class="small text-muted">Enable/disable platform features</p>
+          <a href="/admin/features" class="btn btn-warning btn-sm">Manage Features</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100">
+        <div class="card-body text-center">
           <i class="fas fa-video fa-2x text-primary mb-3"></i>
           <h6>Video Messages</h6>
           <p class="small text-muted">Manage YouTube video messages and categories</p>

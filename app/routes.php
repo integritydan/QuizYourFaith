@@ -30,6 +30,21 @@ $router->group('/admin',function($r){
     $r->post('/videos/categories/store',[\App\Controllers\Admin\VideoController::class,'storeCategory']);
 });
 
+// Feature management routes
+$router->group('/admin',function($r){
+    $r->get('/features',[\App\Controllers\Admin\FeatureController::class,'index']);
+    $r->get('/features/category/{name}',[\App\Controllers\Admin\FeatureController::class,'category']);
+    $r->get('/features/create',[\App\Controllers\Admin\FeatureController::class,'create']);
+    $r->post('/features/store',[\App\Controllers\Admin\FeatureController::class,'store']);
+    $r->get('/features/edit/{id}',[\App\Controllers\Admin\FeatureController::class,'edit']);
+    $r->post('/features/update/{id}',[\App\Controllers\Admin\FeatureController::class,'update']);
+    $r->post('/features/delete/{name}',[\App\Controllers\Admin\FeatureController::class,'delete']);
+    $r->post('/features/toggle/{name}',[\App\Controllers\Admin\FeatureController::class,'toggle']);
+    $r->post('/features/enable-category/{name}',[\App\Controllers\Admin\FeatureController::class,'enableCategory']);
+    $r->post('/features/disable-category/{name}',[\App\Controllers\Admin\FeatureController::class,'disableCategory']);
+    $r->get('/features/audit/{id}',[\App\Controllers\Admin\FeatureController::class,'audit']);
+});
+
 // Frontend video routes
 $router->get('/videos',[\App\Controllers\VideoController::class,'slider']);
 $router->get('/videos/watch/{id}',[\App\Controllers\VideoController::class,'watch']);
