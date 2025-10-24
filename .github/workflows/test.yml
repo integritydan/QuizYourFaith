@@ -1,0 +1,22 @@
+name: 🧪 Test Workflow
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+    
+    - name: 🎉 Test successful workflow
+      run: |
+        echo "✅ GitHub token has workflow scope!"
+        echo "🚀 QuizYourFaith workflows are working correctly"
+        echo "📅 Timestamp: $(date)"
+        echo "🔐 Repository: ${{ github.repository }}"
+        echo "🎯 Branch: ${{ github.ref }}"
