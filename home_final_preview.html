@@ -1,439 +1,400 @@
-<?php
-$title = 'Quiz Your Faith - Biblical Gaming Platform';
-include __DIR__.'/partials/header.php';
-?>
-
-<!-- Professional Corporate Styles -->
-<style>
-  /* Navigation Styles */
-  .corporate-navbar {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #334155;
-    padding: 1rem 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1050;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white !important;
-    text-decoration: none;
-  }
-  
-  .logo-placeholder {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-gold));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.75rem;
-    font-size: 1.25rem;
-  }
-  
-  .navbar-nav .nav-link {
-    color: var(--text-light) !important;
-    font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: var(--primary-blue) !important;
-  }
-  
-  .navbar-nav .nav-link.active {
-    color: var(--primary-blue) !important;
-  }
-  
-  .navbar-nav .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--primary-blue);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  .navbar-nav .nav-link:hover::after,
-  .navbar-nav .nav-link.active::after {
-    width: 80%;
-  }
-  
-  .navbar-toggler {
-    border: 1px solid #334155;
-    color: var(--text-light);
-  }
-  
-  .navbar-toggler:focus {
-    box-shadow: none;
-  }
-  
-  .user-menu {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .btn-signin {
-    background: transparent;
-    border: 2px solid var(--primary-blue);
-    color: var(--primary-blue);
-    padding: 0.5rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-signin:hover {
-    background: var(--primary-blue);
-    color: white;
-  }
-  
-  .btn-signup {
-    background: linear-gradient(135deg, var(--primary-blue), #3b82f6);
-    border: none;
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-signup:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-  }
-  
-  /* Add padding to body for fixed navbar */
-  body {
-    padding-top: 80px;
-  }
-  
-  :root {
-    --primary-blue: #2563eb;
-    --primary-gold: #f59e0b;
-    --dark-bg: #0f172a;
-    --dark-card: #1e293b;
-    --text-light: #e2e8f0;
-    --text-muted: #94a3b8;
-    --success-green: #10b981;
-    --warning-orange: #f97316;
-  }
-  
-  .corporate-home {
-    background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
-    min-height: 100vh;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  
-  /* Hero Section */
-  .hero-section {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, #3b82f6 100%);
-    padding: 4rem 0;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-  }
-  
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, var(--primary-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-    font-weight: 300;
-  }
-  
-  /* Corporate Cards */
-  .corporate-card {
-    background: var(--dark-card);
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 2rem;
-    transition: all 0.3s ease;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .corporate-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--primary-gold));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .corporate-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-blue);
-  }
-  
-  .corporate-card:hover::before {
-    opacity: 1;
-  }
-  
-  /* Stats Cards */
-  .stat-card {
-    text-align: center;
-    padding: 2rem 1.5rem;
-  }
-  
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-gold);
-    margin-bottom: 0.5rem;
-    font-family: 'Inter', sans-serif;
-  }
-  
-  .stat-label {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 500;
-  }
-  
-  /* Bible Books Slider */
-  .books-slider-container {
-    position: relative;
-    overflow: hidden;
-    padding: 2rem 0;
-  }
-  
-  .books-slider {
-    display: flex;
-    gap: 1.5rem;
-    transition: transform 0.5s ease;
-    padding: 1rem 0;
-  }
-  
-  .book-card {
-    min-width: 280px;
-    background: var(--dark-card);
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .book-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary-blue);
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
-  }
-  
-  .book-category {
-    color: var(--primary-gold);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .book-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: white;
-    margin-bottom: 0.5rem;
-  }
-  
-  .book-description {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-  }
-  
-  .book-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .difficulty-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-  
-  .difficulty-beginner { background: var(--success-green); color: white; }
-  .difficulty-intermediate { background: var(--warning-orange); color: white; }
-  .difficulty-advanced { background: var(--primary-blue); color: white; }
-  .difficulty-expert { background: var(--gaming-red); color: white; }
-  
-  .book-stats {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-  
-  .corporate-btn {
-    background: linear-gradient(135deg, var(--primary-blue), #3b82f6);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    color: white;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-  }
-  
-  .corporate-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-    color: white;
-  }
-  
-  .corporate-btn-outline {
-    background: transparent;
-    border: 2px solid var(--primary-blue);
-    color: var(--primary-blue);
-  }
-  
-  .corporate-btn-outline:hover {
-    background: var(--primary-blue);
-    color: white;
-  }
-  
-  /* Video Section */
-  .video-card {
-    background: var(--dark-card);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-  
-  .video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  }
-  
-  .video-thumbnail {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-  }
-  
-  .video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .video-card:hover .video-thumbnail img {
-    transform: scale(1.05);
-  }
-  
-  .play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(37, 99, 235, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    transition: all 0.3s ease;
-  }
-  
-  .video-card:hover .play-button {
-    background: var(--primary-blue);
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-  
-  /* Navigation Pills */
-  .nav-pills-custom {
-    background: rgba(30, 41, 59, 0.5);
-    border-radius: 12px;
-    padding: 0.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .nav-pills-custom .nav-link {
-    color: var(--text-muted);
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: none;
-  }
-  
-  .nav-pills-custom .nav-link.active {
-    background: var(--primary-blue);
-    color: white;
-  }
-  
-  /* Slider Navigation */
-  .slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid #334155;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Your Faith - Biblical Gaming Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-gold: #f59e0b;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success-green: #10b981;
+            --warning-orange: #f97316;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1e293b 100%);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-top: 80px;
+        }
+        
+        /* Navigation Styles */
+        .corporate-navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #334155;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1050;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white !important;
+            text-decoration: none;
+        }
+        
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-gold));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-blue) !important;
+        }
+        
+        .navbar-nav .nav-link.active {
+            color: var(--primary-blue) !important;
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 80%;
+        }
+        
+        .navbar-toggler {
+            border: 1px solid #334155;
+            color: var(--text-light);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .btn-signin {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-signin:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .btn-signup {
+            background: linear-gradient(135deg, var(--primary-blue), #3b82f6);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #3b82f6 100%);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        /* Corporate Cards */
+        .corporate-card {
+            background: var(--dark-card);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .corporate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-gold));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .corporate-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-blue);
+        }
+        
+        .corporate-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        /* Bible Books Slider - ATM Card Style */
+        .books-slider-container {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .books-slider {
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.5s ease;
+            padding: 1rem 0;
+        }
+        
+        .book-card {
+            min-width: 280px;
+            background: linear-gradient(135deg, var(--dark-card), #334155);
+            border: 1px solid #475569;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-gold));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-blue);
+        }
+        
+        .book-card:hover::before {
+            opacity: 1;
+        }
+        
+        .book-category {
+            color: var(--primary-gold);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .book-description {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .book-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .corporate-btn {
+            background: linear-gradient(135deg, var(--primary-blue), #3b82f6);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .corporate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+        
+        /* Video Section */
+        .video-card {
+            background: var(--dark-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover .play-button {
+            background: var(--primary-blue);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        /* Slider Navigation */
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #334155;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -449,7 +410,7 @@ include __DIR__.'/partials/header.php';
         .slider-prev { left: -20px; }
         .slider-next { right: -20px; }
         
-        /* Footer */
+        /* Corporate Footer */
         .corporate-footer {
             background: #0f172a;
             border-top: 1px solid #334155;
@@ -492,7 +453,7 @@ include __DIR__.'/partials/header.php';
         }
     </style>
 </head>
-<body class="corporate-home">
+<body>
     
     <!-- Professional Navigation -->
     <nav class="navbar navbar-expand-lg corporate-navbar">
@@ -550,10 +511,10 @@ include __DIR__.'/partials/header.php';
                     <h1 class="hero-title">Quiz Your Faith</h1>
                     <p class="hero-subtitle">Master the Scriptures through interactive biblical gaming. Join thousands of players in the ultimate spiritual knowledge challenge.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="/quiz" class="corporate-btn">
+                        <a href="#" class="corporate-btn">
                             <i class="fas fa-play me-2"></i>Start Playing
                         </a>
-                        <a href="/register" class="corporate-btn corporate-btn-outline">
+                        <a href="#" class="corporate-btn corporate-btn-outline">
                             <i class="fas fa-user-plus me-2"></i>Join Community
                         </a>
                     </div>
@@ -761,7 +722,6 @@ include __DIR__.'/partials/header.php';
     </section>
 
     <!-- Video Messages Section -->
-    <?php if (\App\Models\Feature::isEnabled('youtube_videos')): ?>
     <section class="py-5">
         <div class="container">
             <div class="row mb-4">
@@ -770,63 +730,90 @@ include __DIR__.'/partials/header.php';
                     <p class="text-muted">Watch inspiring sermons and biblical teachings</p>
                 </div>
                 <div class="col-md-4 text-md-end">
-                    <a href="/videos" class="corporate-btn corporate-btn-outline">
+                    <a href="#" class="corporate-btn corporate-btn-outline">
                         <i class="fas fa-video me-2"></i>View All Videos
                     </a>
                 </div>
             </div>
             
             <div class="row g-4">
-                <?php
-                $videos = \App\Models\Video::getActiveVideos(3);
-                if (!empty($videos)):
-                    foreach ($videos as $video):
-                ?>
+                <!-- Sample Video 1 -->
                 <div class="col-md-6 col-lg-4">
                     <div class="video-card">
                         <div class="video-thumbnail">
-                            <img src="<?= htmlspecialchars($video->thumbnail_url) ?>" alt="<?= htmlspecialchars($video->title) ?>">
+                            <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Sample Video">
                             <div class="play-button">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
                         <div class="p-3">
-                            <?php if ($video->category_name): ?>
-                                <span class="badge mb-2" style="background-color: <?= htmlspecialchars($video->category_color) ?>">
-                                    <?= htmlspecialchars($video->category_name) ?>
-                                </span>
-                            <?php endif; ?>
-                            <h6 class="text-white mb-2"><?= htmlspecialchars($video->title) ?></h6>
-                            <?php if ($video->description): ?>
-                                <p class="text-muted small mb-3"><?= htmlspecialchars(substr($video->description, 0, 100)) ?>...</p>
-                            <?php endif; ?>
+                            <span class="badge mb-2" style="background-color: #28a745;">Sermons</span>
+                            <h6 class="text-white mb-2">The Power of Faith - Inspirational Message</h6>
+                            <p class="text-muted small mb-3">Discover how faith can transform your life and bring you closer to God's purpose...</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <small class="text-muted">
-                                    <i class="fas fa-eye"></i> <?= number_format($video->views_count) ?> views
+                                    <i class="fas fa-eye"></i> 1,234 views
                                 </small>
-                                <a href="/videos/watch/<?= $video->id ?>" class="corporate-btn btn-sm">
+                                <a href="#" class="corporate-btn btn-sm">
                                     <i class="fas fa-play me-1"></i>Watch
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php
-                    endforeach;
-                else:
-                ?>
-                <div class="col-12">
-                    <div class="text-center py-5">
-                        <i class="fas fa-video fa-3x text-muted mb-3"></i>
-                        <h5 class="text-white">No Videos Available</h5>
-                        <p class="text-muted">Check back soon for inspiring biblical content!</p>
+                
+                <!-- Sample Video 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg" alt="Sample Video 2">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <span class="badge mb-2" style="background-color: #dc3545;">Bible Study</span>
+                            <h6 class="text-white mb-2">Understanding God's Word - Deep Dive</h6>
+                            <p class="text-muted small mb-3">A comprehensive study of biblical principles and their application...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-eye"></i> 2,567 views
+                                </small>
+                                <a href="#" class="corporate-btn btn-sm">
+                                    <i class="fas fa-play me-1"></i>Watch
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <?php endif; ?>
+                
+                <!-- Sample Video 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="video-card">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/kXYiU_JCYtU/maxresdefault.jpg" alt="Sample Video 3">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <span class="badge mb-2" style="background-color: #6f42c1;">Teaching</span>
+                            <h6 class="text-white mb-2">Walking in Faith - Daily Devotion</h6>
+                            <p class="text-muted small mb-3">Learn how to walk by faith in your daily life and decisions...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    <i class="fas fa-eye"></i> 892 views
+                                </small>
+                                <a href="#" class="corporate-btn btn-sm">
+                                    <i class="fas fa-play me-1"></i>Watch
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <?php endif; ?>
 
     <!-- Gaming Features Section -->
     <section class="py-5">
@@ -896,37 +883,37 @@ include __DIR__.'/partials/header.php';
                 <div class="col-lg-2">
                     <div class="footer-section">
                         <h5>Game Modes</h5>
-                        <a href="/quiz">Quick Play</a>
-                        <a href="/tournaments">Tournaments</a>
-                        <a href="/multiplayer">Multiplayer</a>
-                        <a href="/study">Study Mode</a>
+                        <a href="#">Quick Play</a>
+                        <a href="#">Tournaments</a>
+                        <a href="#">Multiplayer</a>
+                        <a href="#">Study Mode</a>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-section">
                         <h5>Community</h5>
-                        <a href="/leaderboard">Leaderboard</a>
-                        <a href="/achievements">Achievements</a>
-                        <a href="/forums">Forums</a>
-                        <a href="/events">Events</a>
+                        <a href="#">Leaderboard</a>
+                        <a href="#">Achievements</a>
+                        <a href="#">Forums</a>
+                        <a href="#">Events</a>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-section">
                         <h5>Resources</h5>
-                        <a href="/guide">Game Guide</a>
-                        <a href="/bible-study">Bible Study</a>
-                        <a href="/faq">FAQ</a>
-                        <a href="/support">Support</a>
+                        <a href="#">Game Guide</a>
+                        <a href="#">Bible Study</a>
+                        <a href="#">FAQ</a>
+                        <a href="#">Support</a>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-section">
                         <h5>Company</h5>
-                        <a href="/about">About Us</a>
-                        <a href="/privacy">Privacy Policy</a>
-                        <a href="/terms">Terms of Service</a>
-                        <a href="/contact">Contact</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Contact</a>
                     </div>
                 </div>
             </div>
@@ -943,7 +930,6 @@ include __DIR__.'/partials/header.php';
         </div>
     </footer>
 
-    <!-- Slider JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Slider functionality
@@ -966,21 +952,18 @@ include __DIR__.'/partials/header.php';
         
         // Quiz functionality
         function startQuiz(book) {
-            window.location.href = `/quiz/play/${book}`;
+            alert(`Starting quiz for ${book}`);
         }
         
         // Auto-scroll sliders
         setInterval(() => {
-            const oldSlider = document.getElementById('oldTestamentSlider');
-            const newSlider = document.getElementById('newTestamentSlider');
+            const beginnerSlider = document.getElementById('beginnerSlider');
+            const intermediateSlider = document.getElementById('intermediateSlider');
+            const advancedSlider = document.getElementById('advancedSlider');
             
-            // Only auto-scroll if tab is active
-            if (document.getElementById('old-testament').classList.contains('active')) {
-                moveSlider('oldTestamentSlider', 1);
-            }
-            if (document.getElementById('new-testament').classList.contains('active')) {
-                moveSlider('newTestamentSlider', 1);
-            }
+            moveSlider('beginnerSlider', 1);
+            moveSlider('intermediateSlider', 1);
+            moveSlider('advancedSlider', 1);
         }, 5000);
         
         // Smooth scrolling for internal links
@@ -997,5 +980,5 @@ include __DIR__.'/partials/header.php';
             });
         });
     </script>
-
-<?php include __DIR__.'/partials/footer.php'; ?>
+</body>
+</html>
