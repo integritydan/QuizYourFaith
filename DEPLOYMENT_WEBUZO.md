@@ -15,10 +15,19 @@
 3. **Set permissions**: 644 for PHP files, 755 for directories
 
 ### Step 2: Database Setup (2 minutes)
+
+#### Option A: Webuzo Installer (Recommended)
 1. **Go to Webuzo Panel** → Database Manager
 2. **Create a database** (remember the name, username, password)
 3. **Import** `simple_install.sql` file
 4. **Note down** your database credentials
+
+#### Option B: Manual Installation (If Webuzo installer fails)
+1. **Go to Webuzo Panel** → Database Manager
+2. **Create a database** (remember the name, username, password)
+3. **Visit**: `https://yourdomain.com/manual_install.php`
+4. **Follow** the step-by-step installation process
+5. **Note down** your database credentials
 
 ### Step 3: Configuration (1 minute)
 1. **Edit** `simple_config.php`
